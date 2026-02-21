@@ -1,0 +1,17 @@
+# Write your MySQL query statement below
+select p.product_id, IFNULL(round(sum(p.price * u.units)/sum(units), 2),0) as average_price
+from Prices p
+left join UnitsSold u
+on p.product_id = u.product_id
+AND p.start_date <= u.purchase_date
+AND u.purchase_date <= p.end_date
+group by p.product_id
+
+
+#FIRST DO THE JOIN THE TABLE WITH PRODUCT ID
+2. CHECK THE purchase_date IS IN BETWEEN THE start_date AND end_date WITH SAME PRODUCT ID
+  CODE : AND p.start_date <= u.purchase_date
+        AND u.purchase_date <= p.end_date
+3.FIND THE AVERAGE IF THE purchase_date IN BETWEEN
+  AVERAGE CODE : round(sum(p.price * u.units)/sum(units), 2)
+4.IFNULL(round(sum(p.price * u.units)/sum(units), 2),0) -> USE FOR If a product does not have any sold units, its average selling price is assumed to be 0.
